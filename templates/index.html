@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이미지 생성 챗봇</title>
+</head>
+<body>
+    <h1>이미지 생성 챗봇</h1>
+    <div id="chat-box">
+        {% for message in messages %}
+        <p><b>{{ message.role }}:</b> {{ message.content }}</p>
+        {% if message.role == 'assistant' and message.image_url %}
+        <img src="{{ message.image_url }}" alt="생성된 이미지">
+        {% endif %}
+        {% endfor %}
+    </div>
+    <form action="/chat/" method="post">
+        <input type="text" name="user_message" placeholder="이미지에 대한 설명을 입력하세요...">
+        <input type="submit" value="제출">
+    </form>
+</body>
+</html>
