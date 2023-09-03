@@ -5,7 +5,7 @@ import openai
 
 app = FastAPI()
 
-openai.api_key = ""
+openai.api_key = "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"
 templates = Jinja2Templates(directory="templates")
 
 messages = [{"role": "system", "content": "이미지 생성 챗봇에 오신 것을 환영합니다!"}]
@@ -32,6 +32,3 @@ async def chat_response(request: Request, user_message: str = Form(...)):
 
     return templates.TemplateResponse("index.html", {"request": request, "messages": messages})
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
