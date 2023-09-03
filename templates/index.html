@@ -2,19 +2,19 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>이미지 생성 챗봇</title>
+    <title>그림일기</title>
     <style>
         body {
-            font-family: 'Nanum Pen Script', cursive; /* 그림일기 스타일의 폰트 */
-            background-color: #FAF3E0; /* 밝은 베이지색 배경 */
+            font-family: 'Nanum Pen Script', cursive;
+            background-color: #FAF3E0;
             padding: 20px;
         }
         h1 {
             text-align: center;
-            color: #5C4B51; /* 어두운 갈색 */
+            color: #5C4B51;
         }
         #chat-box {
-            border: 2px dashed #5C4B51; /* 점선 테두리 */
+            border: 2px dashed #5C4B51;
             padding: 20px;
             max-width: 600px;
             margin: 20px auto;
@@ -31,24 +31,38 @@
         }
         input[type="submit"] {
             padding: 10px 20px;
-            background-color: #F7DC6F; /* 노란색 */
+            background-color: #F7DC6F;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin-left: 10px;
         }
         input[type="submit"]:hover {
-            background-color: #F4D03F; /* 진한 노란색 */
+            background-color: #F4D03F;
+        }
+        .image-container {
+            position: relative;
+        }
+        .image-date {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            background-color: rgba(255, 255, 255, 0.7); /* 반투명한 흰색 배경 */
+            padding: 2px 5px;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
-    <h1>이미지 생성 챗봇</h1>
+    <h1>그림 일기</h1>
     <div id="chat-box">
         {% for message in messages %}
         <p><b>{{ message.role }}:</b> {{ message.content }}</p>
         {% if message.role == 'assistant' and message.image_url %}
-        <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
+        <div class="image-container">
+            <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
+            <span class="image-date">{{ current_time }}</span>
+        </div>
         {% endif %}
         {% endfor %}
     </div>
