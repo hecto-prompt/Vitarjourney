@@ -5,7 +5,7 @@ import openai
 
 app = FastAPI()
 
-openai.api_key = "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"
+openai.api_key = "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"
 templates = Jinja2Templates(directory="templates")
 
 messages = [{"role": "system", "content": "그림일기에 오신 것을 환영합니다!"}]
