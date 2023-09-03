@@ -2,10 +2,11 @@ from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from datetime import datetime
 import openai
+import os
 
 app = FastAPI()
 
-openai.api_key = "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"
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 templates = Jinja2Templates(directory="templates")
 
 messages = [{"role": "system", "content": "그림일기에 오신 것을 환영합니다!"}]
