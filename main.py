@@ -5,7 +5,7 @@ import openai
 
 app = FastAPI()
 
-openai.api_key = "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"
+openai.api_key = "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"
 templates = Jinja2Templates(directory="templates")
 
 messages = [{"role": "system", "content": "이미지 생성 챗봇에 오신 것을 환영합니다!"}]
