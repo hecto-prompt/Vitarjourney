@@ -16,7 +16,7 @@ if load_dotenv():
     # 환경 변수에서 OpenAI API 키를 가져와 설정합니다.
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
-else :
+else:
 
     openai.api_key = os.environ.get("OPENAI_API_KEY")
 
