@@ -11,12 +11,17 @@ import os
 from pydantic import BaseModel
 
 app = FastAPI()
+if load_dotenv():
+    # .env 파일을 로드합니다.
 
-# .env 파일을 로드합니다.
-load_dotenv()
+    # 환경 변수에서 OpenAI API 키를 가져와 설정합니다.
+    openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# 환경 변수에서 OpenAI API 키를 가져와 설정합니다.
-openai.api_key = os.getenv("OPENAI_API_KEY")
+else :
+
+    openai.api_key = os.environ.get("OPENAI_API_KEY")
+
+
 
 templates = Jinja2Templates(directory="templates")
 
