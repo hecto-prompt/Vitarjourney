@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Viewport meta tag -->
     <title>그림일기</title>
     <style>
         body {
@@ -51,10 +52,20 @@
             padding: 2px 5px;
             border-radius: 3px;
         }
+
+        /* Media Queries for responsiveness */
+        @media screen and (max-width: 600px) {
+            #chat-box {
+                width: 90%;
+            }
+            input[type="text"] {
+                width: 90%;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>그림 일기</h1>
+    <h1>VitaJourney</h1>
     <div id="chat-box">
         {% for message in messages %}
         <p><b>{{ message.role }}:</b> {{ message.content }}</p>
@@ -67,8 +78,17 @@
         {% endfor %}
     </div>
     <form action="/chat/" method="post">
-        <input type="text" name="user_message" placeholder="이미지에 대한 설명을 입력하세요...">
+        <input type="text" name="user_message" placeholder="원하는 목표를 적어주세요.">
+
+        <!-- 숨겨진 폼 필드에 변수 사용 -->
+        <input type="hidden" name="height" value="{{ height }}">
+        <input type="hidden" name="age" value="{{ age }}">
+        <input type="hidden" name="current_weight" value="{{ current_weight }}">
+        <input type="hidden" name="target_weight" value="{{ target_weight }}">
+        <input type="hidden" name="duration" value="{{ duration }}">
+
         <input type="submit" value="제출">
     </form>
 </body>
 </html>
+
