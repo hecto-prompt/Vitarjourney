@@ -68,13 +68,16 @@
     <h1>VitaJourney</h1>
     <div id="chat-box">
         {% for message in messages %}
-        <p><b>{{ message.role }}:</b> {{ message.content }}</p>
-        {% if message.role == 'assistant' and message.image_url %}
-        <div class="image-container">
-            <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
-            <span class="image-date">{{ current_time }}</span>
-        </div>
-        {% endif %}
+            <p><b>{{ message.role }}:</b> {{ message.content }}</p>
+            {% if message.role == 'assistant' and message.text %}
+            <p>{{ message.text }}</p>
+            {% endif %}
+            {% if message.role == 'assistant' and message.image_url %}
+            <div class="image-container">
+                <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
+                <span class="image-date">{{ message.current_time }}</span>
+            </div>
+            {% endif %}
         {% endfor %}
     </div>
     <form action="/chat/" method="post">
