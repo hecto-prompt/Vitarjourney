@@ -89,7 +89,7 @@ async def chat_response(
         response_text = openai.Completion.create(
             engine="text-davinci-003",
             prompt=user_message,
-            max_tokens=1000
+            max_tokens=2000
         )
 
         text = response_text.choices[0].text
@@ -108,7 +108,11 @@ async def chat_response(
         messages.append(
             {"role": "assistant", "content": "다음은 요청하신 식단입니다:", "text":text, "image_url": image_url, "current_time": current_time})
     except Exception as e:
-        messages.append({"role": "assistant", "content": f"오류: {e}"})
+        if 'safety system' in str(e):
+            messages.append({"role": "assistant", "content": f"safety system: {e}"})
+        else:
+            messages.append({"role": "assistant", "content": f"오류: {e}"})
+
 
     return templates.TemplateResponse("index.html", {"request": {}, "messages": messages})
 
