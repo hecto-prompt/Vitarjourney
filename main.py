@@ -63,9 +63,11 @@ async def chat_response(
         age: int = Form(...),
         current_weight: int = Form(...),
         target_weight: int = Form(...),
-        duration: int = Form(...)
+        duration: int = Form(...),
+
 ):
     global messages
+
     print("Received input data:")
     print(f"Height (cm): {height}")
     print(f"Age: {age}")
@@ -113,7 +115,14 @@ async def chat_response(
         else:
             messages.append({"role": "assistant", "content": f"오류: {e}"})
 
-
-    return templates.TemplateResponse("index.html", {"request": {}, "messages": messages})
+    return templates.TemplateResponse("index.html", {
+        "request":{},
+        "height": height,
+        "age": age,
+        "current_weight": current_weight,
+        "target_weight": target_weight,
+        "duration": duration,
+        "messages": messages
+    })
 
 # 추가 폼 요소(height, weight, target_weight)를 템플릿에 추가해야 합니다.
