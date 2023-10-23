@@ -1,81 +1,99 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-    <title>VitaJourney 입력 폼</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaJourney</title>
     <style>
         body {
-            font-family: 'Helvetica Neue', sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #FAF3E0;
+            padding: 20px;
+            color: #5C4B51;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            max-width: 90%; 
+            width: 800px;
+            overflow: hidden;
         }
 
         h1 {
             text-align: center;
-            font-weight: 600;
-            color: #333;
-            padding: 20px 0;
+            color: #3C1E1E;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 0 20px;
         }
 
         form {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
             padding: 20px;
         }
 
         label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
+            font-weight: bold;
+            color: #3C1E1E;
+            margin-bottom: 5px;
         }
 
-        input[type="number"] {
-            width: 100%;
-            padding: 12px 8px;
-            margin-bottom: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+        input[type="text"], input[type="number"] {
+            width: calc(100% - 40px);
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 1px solid #EDEDED;
+            border-radius: 20px;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 15px; /* 간격 추가 */
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #FFD600;
         }
 
         input[type="submit"] {
-            background-color: #0073e6;
-            color: #fff;
-            padding: 12px 20px;
+            background-color: #FFD600;
             border: none;
-            border-radius: 4px;
-            font-size: 18px;
             cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+            padding: 15px 20px;
+            border-radius: 20px;  /* 이 부분을 다시 추가합니다. */
         }
 
         input[type="submit"]:hover {
-            background-color: #005bbf;
+            background-color: #FFC100;
         }
     </style>
 </head>
 <body>
-    <h1>VitaJourney 정보 입력</h1>
-    <form method="post" action="/check">
-        <label for="height">키 (cm):</label>
-        <input type="number" id="height" name="height" required>
-
-        <label for="age">나이:</label>
-        <input type="number" id="age" name="age" required>
-
-        <label for="current_weight">현재 체중 (kg):</label>
-        <input type="number" id="current_weight" name="current_weight" required>
-
-        <label for="target_weight">원하는 체중 (kg):</label>
-        <input type="number" id="target_weight" name="target_weight" required>
-
-        <label for="duration">기간 (일):</label>
-        <input type="number" id="duration" name="duration" required>
-
-        <input type="submit" value="전송">
-    </form>
+    <div id="container">
+        <h1>VitaJourney</h1>
+        <form method="post" action="/check">
+            <label for="height">키 (cm):</label>
+            <input type="number" id="height" name="height" required>
+            <label for="age">나이:</label>
+            <input type="number" id="age" name="age" required>
+            <label for="current_weight">현재 체중 (kg):</label>
+            <input type="number" id="current_weight" name="current_weight" required>
+            <label for="target_weight">원하는 체중 (kg):</label>
+            <input type="number" id="target_weight" name="target_weight" required>
+            <label for="duration">기간 (일):</label>
+            <input type="number" id="duration" name="duration" required>
+            <input type="submit" value="제출">
+        </form>
+    </div>
 </body>
 </html>
