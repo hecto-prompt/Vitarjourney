@@ -2,96 +2,118 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Viewport meta tag -->
-    <title>그림일기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VitaJourney</title>
     <style>
         body {
-            font-family: 'Nanum Pen Script', cursive;
+            font-family: 'Arial', sans-serif;
             background-color: #FAF3E0;
             padding: 20px;
+            color: #5C4B51;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
+
+        #container {
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            overflow: hidden;
+        }
+
         h1 {
             text-align: center;
-            color: #5C4B51;
+            color: #3C1E1E;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 0 20px;
+            border-bottom: none;  /* 라인 제거 */
         }
+
         #chat-box {
-            border: 2px dashed #5C4B51;
+            border: 1px solid #EDEDED;
             padding: 20px;
-            max-width: 600px;
+            max-width: 700px;
             margin: 20px auto;
+            max-height: 500px;  /* 최대 높이를 설정합니다. */
+            overflow-y: auto;   /* 내용이 넘칠 경우 스크롤바가 생성됩니다. */
         }
+
         form {
             text-align: center;
-            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
         }
-        input[type="text"] {
-            width: 70%;
-            padding: 10px;
-            border: 1px solid #5C4B51;
-            border-radius: 5px;
+
+        input[type="text"], input[type="submit"] {
+            padding: 15px 20px;
+            font-size: 18px;
+            border: 1px solid #EDEDED;
+            border-radius: 20px;
+            outline: none;
+            transition: border-color 0.3s;
         }
+
+        input[type="text"]:focus {
+            border-color: #FFD600;
+        }
+
         input[type="submit"] {
-            padding: 10px 20px;
-            background-color: #F7DC6F;
+            background-color: #FFD600;
             border: none;
-            border-radius: 5px;
             cursor: pointer;
-            margin-left: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s;
         }
+
         input[type="submit"]:hover {
-            background-color: #F4D03F;
-        }
-        .image-container {
-            position: relative;
-        }
-        .image-date {
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-            background-color: rgba(255, 255, 255, 0.7); /* 반투명한 흰색 배경 */
-            padding: 2px 5px;
-            border-radius: 3px;
+            background-color: #FFC100;
         }
 
         /* Media Queries for responsiveness */
-        @media screen and (max-width: 600px) {
-            #chat-box {
+        @media screen and (max-width: 720px) {
+            #container {
                 width: 90%;
             }
             input[type="text"] {
-                width: 90%;
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
-    <h1>VitaJourney</h1>
-    <div id="chat-box">
-        {% for message in messages %}
-            <p><b>{{ message.role }}:</b> {{ message.content }}</p>
-            {% if message.role == 'assistant' and message.text %}
-            <p>{{ message.text }}</p>
-            {% endif %}
-            {% if message.role == 'assistant' and message.image_url %}
-            <div class="image-container">
-                <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
-                <span class="image-date">{{ message.current_time }}</span>
-            </div>
-            {% endif %}
-        {% endfor %}
+    <div id="container">
+        <h1>VitaJourney</h1>
+        <div id="chat-box">
+            {% for message in messages %}
+                <p><b>{{ message.role }}:</b> {{ message.content }}</p>
+                {% if message.role == 'assistant' and message.text %}
+                <p>{{ message.text }}</p>
+                {% endif %}
+                {% if message.role == 'assistant' and message.image_url %}
+                <div class="image-container">
+                    <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
+                    <span class="image-date">{{ message.current_time }}</span>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <form action="/chat/" method="post">
+            <input type="text" name="user_message" placeholder="원하는 목표를 적어주세요.">
+            <!-- Hidden form fields -->
+            <input type="hidden" name="height" value="{{ height }}">
+            <input type="hidden" name="age" value="{{ age }}">
+            <input type="hidden" name="current_weight" value="{{ current_weight }}">
+            <input type="hidden" name="target_weight" value="{{ target_weight }}">
+            <input type="hidden" name="duration" value="{{ duration }}">
+            <input type="submit" value="제출">
+        </form>
     </div>
-    <form action="/chat/" method="post">
-        <input type="text" name="user_message" placeholder="원하는 목표를 적어주세요.">
-
-        <!-- 숨겨진 폼 필드에 변수 사용 -->
-        <input type="hidden" name="height" value="{{ height }}">
-        <input type="hidden" name="age" value="{{ age }}">
-        <input type="hidden" name="current_weight" value="{{ current_weight }}">
-        <input type="hidden" name="target_weight" value="{{ target_weight }}">
-        <input type="hidden" name="duration" value="{{ duration }}">
-
-        <input type="submit" value="제출">
-    </form>
 </body>
 </html>
-
