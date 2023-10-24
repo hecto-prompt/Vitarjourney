@@ -76,7 +76,7 @@ async def chat_response(
     print(f"Duration (days): {duration}")
 
     user_text = (f" my infomation is Height: {height} cm, Age: {age} years, "
-                 f"Current Weight: {current_weight} kg, Target Weight: {target_weight} kg, Duration: {duration} days, Please recommend Diet food receipt")
+                 f"Current Weight: {current_weight} kg, Target Weight: {target_weight} kg, Duration: {duration} days, Please recommend Diet food receipt and translate in Korean")
 
 
 
