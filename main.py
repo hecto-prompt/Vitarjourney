@@ -94,6 +94,7 @@ async def chat_response(
             max_tokens=2000
         )
 
+
         text = response_text.choices[0].text
 
         response_image = openai.Image.create(
