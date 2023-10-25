@@ -9,7 +9,7 @@ from langchain.llms.openai import OpenAI
 from langchain.prompts import PromptTemplate
 from pydantic import BaseModel
 
-app = FastAPI()
+app = FastAPI(debug=True)
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 
