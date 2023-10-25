@@ -1,7 +1,7 @@
+import os
 from datetime import datetime
 
 import openai
-from decouple import config
 from fastapi import FastAPI, Form
 from fastapi.templating import Jinja2Templates
 from langchain.chains import LLMChain
@@ -9,8 +9,9 @@ from langchain.llms.openai import OpenAI
 from langchain.prompts import PromptTemplate
 from pydantic import BaseModel
 
-app = FastAPI(debug=True)
+app = FastAPI()
 
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 
 templates = Jinja2Templates(directory="templates")
 
