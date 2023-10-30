@@ -107,6 +107,7 @@ async def chat_response(
             )
 
             text = response_text.choices[0].text
+            # translatedText = 
 
             response_image = openai.Image.create(
                 prompt=text,
