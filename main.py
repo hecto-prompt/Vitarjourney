@@ -91,7 +91,7 @@ async def chat_response(
     judgment = good_qa_chain.run(question=user_message)
 
     # 번역 함수
-    async def translate_to_korean_with_openai(text):
+    def translate_to_korean_with_openai(text):
         prompt = f"Translate the following English text to Korean: '{text}'"
         try:
             response = openai.Completion.create(
