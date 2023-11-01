@@ -90,14 +90,20 @@ async def chat_response(
 
     judgment = good_qa_chain.run(question=user_message)
 
-    def translate_to_korean_with_openai(text):
+    # 번역 함수
+    async def translate_to_korean_with_openai(text):
         prompt = f"Translate the following English text to Korean: '{text}'"
-        response = openai.Completion.create(
-            engine="davinci",  # 이 엔진 이름은 현재 사용하고 있는 엔진에 따라 변경될 수 있습니다.
-            prompt=prompt,
-            max_tokens=200
-        )
-        translated_text = response.choices[0].text.strip()
+        try:
+            response = openai.Completion.create(
+                engine="text-davinci-003",
+                prompt=prompt,
+                max_tokens=2000
+            )
+            translated_text = response.choices[0].text.strip()
+            print("Translated text:", translated_text)
+        except Exception as e:
+            print("Error during translation:", e)
+            translated_text = ""
         return translated_text
 
     if judgment == '\nYes':
