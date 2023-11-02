@@ -72,8 +72,10 @@ async def chat_response(
     print(f"Target Weight (kg): {target_weight}")
     print(f"Duration (days): {duration}")
 
-    user_text = (f" my infomation is Height: {height} cm, Age: {age} years, "
-                 f"Current Weight: {current_weight} kg, Target Weight: {target_weight} kg, Duration: {duration} days, Please recommend Diet food recipe for lunch within 500 words strictly. Don't explain about the recipe, just recommend the recipe. Recommend only one recipe.")
+    # user_text = (f" my infomation is Height: {height} cm, Age: {age} years, "
+    #              f"Current Weight: {current_weight} kg, Target Weight: {target_weight} kg, Duration: {duration} days, Please recommend Diet food recipe for lunch within 500 words strictly. Don't explain about the recipe, just recommend the recipe. Recommend only one recipe.")
+    user_text = (f" 내 키는: {height} cm, 나이는: {age} 살이고, "
+                 f"현재 몸무게는: {current_weight} kg, 목표 몸무게는: {target_weight} kg, 기간은: {duration} 일동안이야, 600자 이내로 점심에 먹을만한 건강식 레시피를 추천해줘. 레시피에 대한 설명은 필요없고 레시피만 추천해줘. 레시피는 하나만 추천해줘.")
 
     good_qa_prompt = PromptTemplate(
         template=""""If my text does not contain any food, drink, or fruit, respond with 'No'. If it does, respond with 'Yes'
@@ -91,8 +93,23 @@ async def chat_response(
     judgment = good_qa_chain.run(question=user_message)
 
     # 번역 함수
-    def translate_to_korean_with_openai(text):
-        prompt = f"Translate the following English text to Korean within 800 words: '{text}'"
+    # def translate_to_korean_with_openai(text):
+    #     prompt = f"Translate the following English text to Korean within 800 words: '{text}'"
+    #     try:
+    #         response = openai.Completion.create(
+    #             engine="text-davinci-003",
+    #             prompt=prompt,
+    #             max_tokens=2000
+    #         )
+    #         translated_text = response.choices[0].text.strip()
+    #         print("Translated text:", translated_text)
+    #     except Exception as e:
+    #         print("Error during translation:", e)
+    #         translated_text = ""
+    #     return translated_text
+
+    def translate_to_english_with_openai(text):
+        prompt = f"Translate the following Korean text to English within 800 words: '{text}'"
         try:
             response = openai.Completion.create(
                 engine="text-davinci-003",
@@ -123,10 +140,10 @@ async def chat_response(
             )
 
             text = response_text.choices[0].text
-            translatedText = translate_to_korean_with_openai(text)
+            translatedText = translate_to_english_with_openai(text)
 
             response_image = openai.Image.create(
-                prompt=text,
+                prompt=translatedText,
                 n=1,
                 size="1024x1024"
             )
@@ -137,7 +154,7 @@ async def chat_response(
             image_url = response_image['data'][0]['url']
 
             messages.append(
-                {"role": "assistant", "content": "다음은 요청하신 식단입니다:", "text":translatedText, "image_url": image_url, "current_time": current_time})
+                {"role": "assistant", "content": "다음은 요청하신 식단입니다:", "text":text, "image_url": image_url, "current_time": current_time})
         except Exception as e:
             if 'safety system' in str(e):
                 messages.append({"role": "assistant", "content": f"safety system: {e}"})
