@@ -75,7 +75,7 @@ async def chat_response(
     # user_text = (f" my infomation is Height: {height} cm, Age: {age} years, "
     #              f"Current Weight: {current_weight} kg, Target Weight: {target_weight} kg, Duration: {duration} days, Please recommend Diet food recipe for lunch within 500 words strictly. Don't explain about the recipe, just recommend the recipe. Recommend only one recipe.")
     user_text = (f" 내 키는: {height} cm, 나이는: {age} 살이고, "
-                 f"현재 몸무게는: {current_weight} kg, 목표 몸무게는: {target_weight} kg, 기간은: {duration} 일동안이야, 600자 이내로 점심에 먹을만한 건강식 레시피를 추천해줘. 레시피에 대한 설명은 필요없고 레시피만 추천해줘. 레시피는 하나만 추천해줘.")
+                 f"현재 몸무게는: {current_weight} kg, 목표 몸무게는: {target_weight} kg, 기간은: {duration} 일동안이야, 800자 이내로 점심에 먹을만한 건강식 레시피를 추천해줘. 레시피에 대한 부가설명은 필요없고 레시피를 조리 순서대로 알려줘. 레시피는 하나만 추천해줘. 창의성은 0, 최대한 내가 전달한 식재료만 가지고 만들 수 있는 레시피로 추천해줘.")
 
     good_qa_prompt = PromptTemplate(
         template=""""If my text does not contain any food, drink, or fruit, respond with 'No'. If it does, respond with 'Yes'
