@@ -94,7 +94,7 @@
             {% for message in messages %}
                 <p><b>{{ message.role }}:</b> {{ message.content }}</p>
                 {% if message.role == 'assistant' and message.text %}
-                <p>{{ message.text }}</p>
+                <p>{{ message.text | replace('\n', '<br>') | safe }}</p>
                 {% endif %}
                 {% if message.role == 'assistant' and message.image_url %}
                 <div class="image-container">

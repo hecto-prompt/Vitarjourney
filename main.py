@@ -73,7 +73,7 @@ async def chat_response(
     print(f"Duration (days): {duration}")
 
     user_text = (f" my infomation is Height: {height} cm, Age: {age} years, "
-                 f"Current Weight: {current_weight} kg, Target Weight: {target_weight} kg, Duration: {duration} days, Please recommend Diet food receipt")
+                 f"Current Weight: {current_weight} kg, Target Weight: {target_weight} kg, Duration: {duration} days, Please recommend Diet food recipe for lunch within 500 words strictly. Don't explain about the recipe, just recommend the recipe. Recommend only one recipe.")
 
     good_qa_prompt = PromptTemplate(
         template=""""If my text does not contain any food, drink, or fruit, respond with 'No'. If it does, respond with 'Yes'
@@ -92,7 +92,7 @@ async def chat_response(
 
     # 번역 함수
     def translate_to_korean_with_openai(text):
-        prompt = f"Translate the following English text to Korean: '{text}'"
+        prompt = f"Translate the following English text to Korean within 800 words: '{text}'"
         try:
             response = openai.Completion.create(
                 engine="text-davinci-003",
