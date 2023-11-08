@@ -115,7 +115,7 @@ async def chat_response(
             response = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=prompt,
-                max_tokens=4000
+                max_tokens=2000
             )
             translated_text = response.choices[0].text.strip()
             print("Translated text:", translated_text)
@@ -137,7 +137,7 @@ async def chat_response(
             response_text = openai.Completion.create(
                 engine="text-davinci-003",
                 prompt=user_message,
-                max_tokens=4000
+                max_tokens=2000
             )
 
             text = response_text.choices[0].text
