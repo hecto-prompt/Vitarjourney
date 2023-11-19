@@ -98,7 +98,9 @@
                 {% endif %}
                 {% if message.role == 'assistant' and message.image_url %}
                 <div class="image-container">
-                    <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
+                    <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;" onclick="downloadImage('{{ message.image_url }}')">
+                    <!-- 다운로드 버튼 추가 -->
+                    <button onclick="downloadImage('{{ message.image_url }}')">이미지 다운로드</button>
                     <span class="image-date">{{ message.current_time }}</span>
                 </div>
                 {% endif %}
@@ -116,4 +118,18 @@
         </form>
     </div>
 </body>
+<script>
+    function downloadImage(imageUrl) {
+        var imageName = prompt("다운로드할 이미지의 이름을 입력하세요:", "diet_plan_image");
+        if (imageName) {
+            var link = document.createElement('a');
+            link.href = `/download_image/?url=${encodeURIComponent(imageUrl)}`;
+            link.download = imageName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    }
+
+</script>
 </html>

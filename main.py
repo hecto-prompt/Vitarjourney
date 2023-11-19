@@ -8,6 +8,8 @@ from langchain.chains import LLMChain
 from langchain.llms.openai import OpenAI
 from langchain.prompts import PromptTemplate
 from pydantic import BaseModel
+from fastapi.responses import StreamingResponse
+import requests
 
 app = FastAPI(debug=True)
 
@@ -183,4 +185,10 @@ async def chat_response(
             "duration": duration,
             "messages": messages
         })
+
+@app.get("/download_image/")
+async def download_image(url: str):
+    response = requests.get(url, stream=True)
+    return StreamingResponse(response.iter_content(), media_type=response.headers['Content-Type'])
+
 # 추가 폼 요소(height, weight, target_weight)를 템플릿에 추가해야 합니다.
