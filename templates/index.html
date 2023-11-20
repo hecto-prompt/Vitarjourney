@@ -12,9 +12,11 @@
             color: #5C4B51;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             height: 100vh;
+            margin: 0;
+            box-sizing: border-box;
         }
 
         #container {
@@ -22,25 +24,28 @@
             border-radius: 10px;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             max-width: 700px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100% - 40px);
             overflow: hidden;
+            padding: 20px; /* 패딩 추가 */
         }
 
         h1 {
             text-align: center;
             color: #3C1E1E;
             font-weight: bold;
-            margin: 20px 0;
-            padding: 0 20px;
-            border-bottom: none;  /* 라인 제거 */
+            margin-bottom: 20px;
+            padding: 0;
         }
 
         #chat-box {
             border: 1px solid #EDEDED;
-            padding: 20px;
-            max-width: 700px;
-            margin: 20px auto;
-            max-height: 500px;  /* 최대 높이를 설정합니다. */
-            overflow-y: auto;   /* 내용이 넘칠 경우 스크롤바가 생성됩니다. */
+            overflow-y: auto;
+            flex-grow: 1;
+            max-height: 80%;
+            padding: 20px; /* 추가된 패딩 */
         }
 
         form {
@@ -48,7 +53,7 @@
             display: flex;
             flex-direction: column;
             gap: 10px;
-            padding: 20px;
+            padding: 20px
         }
 
         input[type="text"], input[type="submit"] {
@@ -57,7 +62,8 @@
             border: 1px solid #EDEDED;
             border-radius: 20px;
             outline: none;
-            transition: border-color 0.3s;
+            width: 100%; /* 너비 100%로 설정 */
+            box-sizing: border-box; /* 박스 크기 계산 방식 변경 */
         }
 
         input[type="text"]:focus {
@@ -69,7 +75,6 @@
             border: none;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s;
         }
 
         input[type="submit"]:hover {
@@ -80,9 +85,10 @@
         @media screen and (max-width: 720px) {
             #container {
                 width: 90%;
+                margin: 20px 5%;
             }
-            input[type="text"] {
-                width: 100%;
+            form {
+                padding: 10px;
             }
         }
     </style>
