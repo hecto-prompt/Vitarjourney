@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- 화면 캡쳐 CDN -->
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <title>VitaJourney</title>
     <style>
         body {
@@ -92,16 +95,18 @@
         <h1>VitaJourney</h1>
         <div id="chat-box">
             {% for message in messages %}
-                <p><b>{{ message.role }}:</b> {{ message.content }}</p>
+                <p class="request-message"><b>{{ message.role }}:</b> {{ message.content }}</p>
                 {% if message.role == 'assistant' and message.text %}
-                <p>{{ message.text | replace('\n', '<br>') | safe }}</p>
-                {% endif %}
-                {% if message.role == 'assistant' and message.image_url %}
-                <div class="image-container">
-                    <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;" onclick="downloadImage('{{ message.image_url }}')">
-                    <!-- 다운로드 버튼 추가 -->
-                    <button onclick="downloadImage('{{ message.image_url }}')">이미지 다운로드</button>
-                    <span class="image-date">{{ message.current_time }}</span>
+                <div id="recipe{{loop.index}}">
+                    <p class="recipe-message">{{ message.text | replace('\n', '<br>') | safe }}</p>
+                    {% endif %}
+                    {% if message.role == 'assistant' and message.image_url %}
+                    <div class="image-container">
+                        <img src="{{ message.image_url }}" alt="생성된 이미지" style="max-width: 100%;">
+                        <!-- 다운로드 버튼 추가 -->
+                        <button id="capBtn" onclick="downloadRecipe('recipe{{ loop.index }}')">레시피 다운로드</button>
+                        <span class="image-date">{{ message.current_time }}</span>
+                    </div>
                 </div>
                 {% endif %}
             {% endfor %}
@@ -119,17 +124,37 @@
     </div>
 </body>
 <script>
-    function downloadImage(imageUrl) {
-        var imageName = prompt("다운로드할 이미지의 이름을 입력하세요:", "diet_plan_image");
-        if (imageName) {
-            var link = document.createElement('a');
-            link.href = `/download_image/?url=${encodeURIComponent(imageUrl)}`;
-            link.download = imageName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+    // 이미지 다운로드 함수
+    function downloadRecipe(divId) {
+            html2canvas(document.querySelector(`#${ divId }`), {
+                allowTaint: true,
+                useCORS: true
+            }).then(canvas => {
+                saveImg(canvas.toDataURL('image/png'), "diet_plan_image.png");
+            });                
+
+        function saveImg(data, name) {
+            var a = document.createElement("a");
+            if(typeof a.download === 'string') {
+                a.href = data;
+                a.download = name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
         }
     }
+    // function downloadImage(imageUrl) {
+    //     var imageName = prompt("다운로드할 이미지의 이름을 입력하세요:", "diet_plan_image");
+    //     if (imageName) {
+    //         var link = document.createElement('a');
+    //         link.href = `/download_image/?url=${encodeURIComponent(imageUrl)}`;
+    //         link.download = imageName;
+    //         document.body.appendChild(link);
+    //         link.click();
+    //         document.body.removeChild(link);
+    //     }
+    // }
 
 </script>
 </html>
